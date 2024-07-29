@@ -1,0 +1,32 @@
+### Register Student User
+POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+  "name": "Gabriel Sta",
+  "email": "gabrielsta@example.com",
+  "password": "password",
+  "password_confirmation": "password",
+  "role": "student",
+  "admin_id": "1"
+}
+
+### Login User
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+  "email": "gabrielsta@example.com",
+  "password": "password",
+  "role": "student"
+}
+
+### Get Authenticated User Information
+GET http://localhost:8000/api/user
+Authorization: Bearer 4|RCwZYJPHIPuTqqer8xvfIWPtlxYLWsF0eF05PYMu140e3e18
+Content-Type: application/json
+
+### Logout User
+POST http://localhost:8000/api/logout
+Authorization: Bearer 4|RCwZYJPHIPuTqqer8xvfIWPtlxYLWsF0eF05PYMu140e3e18
+Content-Type: application/json
