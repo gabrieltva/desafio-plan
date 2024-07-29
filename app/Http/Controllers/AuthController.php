@@ -17,7 +17,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|string|in:' . UserRoleEnum::Admin->value . ',' . UserRoleEnum::Student->value,
-            'admin_id' => 'required_if:role,student|integer'
+            'admin_id' => 'required_if:role,student|integer|exists:users,id'
         ]);
 
         $user = User::create([
