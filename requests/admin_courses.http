@@ -1,0 +1,34 @@
+### Listar Cursos
+GET http://localhost:8000/api/course
+Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
+Content-Type: application/json
+
+### Criar Curso
+POST http://localhost:8000/api/course
+Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
+Content-Type: application/json
+
+{
+  "title": "Curso de Programação",
+  "description": "Aprenda a programar em diversas linguagens."
+}
+
+### Mostrar Curso Específico
+GET http://localhost:8000/api/course/1
+Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
+Content-Type: application/json
+
+### Atualizar Curso
+PUT http://localhost:8000/api/course/1
+Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
+Content-Type: application/json
+
+{
+  "title": "Curso de Programação Avançada",
+  "description": "Aprenda a programar em diversas linguagens com técnicas avançadas."
+}
+
+### Deletar Curso
+DELETE http://localhost:8000/api/course/1
+Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
+Content-Type: application/json

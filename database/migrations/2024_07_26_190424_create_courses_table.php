@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('admin_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
             $table->softDeletes();
         });

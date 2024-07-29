@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->use([
             App\Http\Middleware\ForceJsonResponse::class
         ]);
+
+        $middleware->alias([
+            'role' => App\Http\Middleware\CheckUserRole::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
