@@ -1,4 +1,4 @@
-### Register User
+### Register Admin User
 POST http://localhost:8000/api/register
 Content-Type: application/json
 
@@ -7,7 +7,7 @@ Content-Type: application/json
   "email": "johndoe@example.com",
   "password": "password",
   "password_confirmation": "password",
-  "role": "student"
+  "role": "admin"
 }
 
 ### Login User
@@ -17,15 +17,15 @@ Content-Type: application/json
 {
   "email": "johndoe@example.com",
   "password": "password",
-  "role": "student"
+  "role": "admin"
 }
 
 ### Get Authenticated User Information
 GET http://localhost:8000/api/user
-Authorization: Bearer XPTO
+Authorization: Bearer 2|VxXG5hTXZIdua26U5VP75oYM1KDR222LYSpZWKOS68928469
 Content-Type: application/json
 
 ### Logout User
 POST http://localhost:8000/api/logout
-Authorization: Bearer XPTO
+Authorization: Bearer 2|VxXG5hTXZIdua26U5VP75oYM1KDR222LYSpZWKOS68928469
 Content-Type: application/json

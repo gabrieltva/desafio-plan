@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default(UserRoleEnum::Student->value);
-            $table->foreignId('admin_id')->references('id')->on(User::class)->cascadeOnDelete()->nullable();
+            $table->foreignId('admin_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

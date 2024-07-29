@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('courses_student_reference', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('user', 'id')->cascadeOnDelete();
-            $table->foreignId('course_id')->constrained('courses', 'id')->cascadeOnDelete();
+            $table->foreignId('student_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('course_id')->references('id')->on('courses')->cascadeOnDelete();
             $table->timestamps();
         });
     }
