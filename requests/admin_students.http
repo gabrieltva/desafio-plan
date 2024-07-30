@@ -2,8 +2,3 @@
 GET http://localhost:8000/api/admin/students
 Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
 Content-Type: application/json
-
-### Listar Cursos por Estudante
-GET http://localhost:8000/api/admin/students/9/courses
-Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
-Content-Type: application/json

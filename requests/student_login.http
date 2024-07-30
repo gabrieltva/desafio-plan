@@ -30,3 +30,8 @@ Content-Type: application/json
 POST http://localhost:8000/api/logout
 Authorization: Bearer 6|Fqg7u3qkZhMy83qRN3R7NW39tQvHcnFe7dvyhg9Jf0f05e08
 Content-Type: application/json
+
+### Listar Administradores
+GET http://localhost:8000/api/admin/list
+Authorization: Bearer 8|DxmuHTOTdV3tL3O4IwMosYhImxXN7xr9uQoeE2Ef10edaa92
+Content-Type: application/json

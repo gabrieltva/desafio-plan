@@ -12,7 +12,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::where('admin_id', auth()->id())->get();
+        $courses = Course::where('admin_id', auth()->id())->with('students')->get();
         return response()->json($courses, 200);
     }
 
@@ -22,7 +22,12 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $course = Course::create(['admin_id' => auth()->id(), ...$request->validated()]);
-        return response()->json($course, 201);
+        
+        if ($request->has('students')) {
+            $course->students()->attach($request->input('students'));
+        }
+
+        return response()->json($course->with('students'), 201);
     }
 
     /**
@@ -34,7 +39,7 @@ class CourseController extends Controller
             return response()->json(['message' => 'Course not found.'], 404);
         }
 
-        return response()->json($course, 200);
+        return response()->json($course->with('students')->get(), 200);
     }
 
     /**
@@ -47,7 +52,12 @@ class CourseController extends Controller
         }
 
         $course->update($request->validated());
-        return response()->json($course, 200);
+
+        if ($request->has('students')) {
+            $course->students()->sync($request->input('students'));
+        }
+
+        return response()->json($course->with('students'), 200);
     }
 
     /**
@@ -56,7 +66,7 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         if ($course->admin_id != auth()->id()) {
-            return response()->json(['message' => 'Course not found.'], 40);
+            return response()->json(['message' => 'Course not found.'], 404);
         }
 
         if ($course->delete()) {

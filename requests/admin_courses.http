@@ -10,7 +10,8 @@ Content-Type: application/json
 
 {
   "title": "Curso de Programação",
-  "description": "Aprenda a programar em diversas linguagens."
+  "description": "Aprenda a programar em diversas linguagens.",
+  "students": [9]
 }
 
 ### Mostrar Curso Específico
@@ -19,7 +20,7 @@ Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
 Content-Type: application/json
 
 ### Atualizar Curso
-PUT http://localhost:8000/api/course/1
+PUT http://localhost:8000/api/course/3
 Authorization: Bearer 5|5YahtDX5MHqLVtxOPDQwFvZHe8GzCbHqglziCge359cd8d16
 Content-Type: application/json
 

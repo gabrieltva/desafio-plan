@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 
 class UserController extends Controller
@@ -14,15 +15,11 @@ class UserController extends Controller
         return response()->json($students, 200);
     }
 
-    public function listCoursesByStudents(User $user)
+    public function listAdmin()
     {
-        $admin_id = auth()->id();
-        if ($user->admin_id != $admin_id) {
-            return response()->json(['message' => 'You are not allowed to access this user\'s courses'], 403);
-        }
-
-        $user->with('courses');
-        $courses = $user->courses()->get();
-        return response()->json($courses, 200);
+        $admins = User::where('role', UserRoleEnum::Admin)
+                    ->select('id', 'name')
+                    ->get();
+        return response()->json($admins, 200);
     }
 }

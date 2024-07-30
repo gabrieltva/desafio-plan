@@ -19,7 +19,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:' . UserRoleEnum::Admin->value])->group(function () {
     Route::resource('course', CourseController::class);
     Route::get('admin/students', [UserController::class, 'listStudentsByAdmin']);
-    Route::get('admin/students/{user}/courses', [UserController::class, 'listCoursesByStudents']);
 });
 
 //student routes
@@ -27,4 +26,5 @@ Route::middleware(['auth:sanctum', 'role:' . UserRoleEnum::Student->value])->gro
     Route::get('student/course', [CoursesStudentController::class, 'index']);
     Route::get('student/course/{course:id}', [CoursesStudentController::class, 'show']);
     Route::put('student/course/{course_id}', [CoursesStudentController::class, 'updateStatus']);
+    Route::get('admin/list', [UserController::class, 'listAdmin']);
 });
