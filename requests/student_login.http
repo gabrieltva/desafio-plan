@@ -23,10 +23,10 @@ Content-Type: application/json
 
 ### Get Authenticated User Information
 GET http://localhost:8000/api/user
-Authorization: Bearer 4|RCwZYJPHIPuTqqer8xvfIWPtlxYLWsF0eF05PYMu140e3e18
+Authorization: Bearer 6|Fqg7u3qkZhMy83qRN3R7NW39tQvHcnFe7dvyhg9Jf0f05e08
 Content-Type: application/json
 
 ### Logout User
 POST http://localhost:8000/api/logout
-Authorization: Bearer 4|RCwZYJPHIPuTqqer8xvfIWPtlxYLWsF0eF05PYMu140e3e18
+Authorization: Bearer 6|Fqg7u3qkZhMy83qRN3R7NW39tQvHcnFe7dvyhg9Jf0f05e08
 Content-Type: application/json
