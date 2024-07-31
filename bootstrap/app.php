@@ -12,11 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->use([
-            App\Http\Middleware\ForceJsonResponse::class
-        ]);
-
         $middleware->alias([
+            'json' => App\Http\Middleware\ForceJsonResponse::class,
             'role' => App\Http\Middleware\CheckUserRole::class
         ]);
     })
