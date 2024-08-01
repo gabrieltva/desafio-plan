@@ -33,3 +33,8 @@ export const userDashboardRouterName = () => {
 
   return 'dashboard';
 }
+
+export const removeUserData = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+}

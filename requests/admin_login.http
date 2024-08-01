@@ -27,5 +27,5 @@ Content-Type: application/json
 
 ### Logout User
 POST http://localhost:8000/api/logout
-Authorization: Bearer 2|VxXG5hTXZIdua26U5VP75oYM1KDR222LYSpZWKOS68928469
+Authorization: Bearer 52|qDkNkmGqwSwPeODrZu8f9tew8jReu96d25bRIX6Na9ccf8d4
 Content-Type: application/json
