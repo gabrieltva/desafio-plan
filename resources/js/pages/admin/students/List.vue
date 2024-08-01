@@ -7,8 +7,10 @@ import ListContainer from '@/components/ListContainer.vue';
 import ListItem from '@/components/ListItem.vue';
 
 const content = ref([])
+const isLoading = ref(false)
 
 onMounted(async () => {
+  isLoading.value = true
   try {
     const response = await fetch(import.meta.env.VITE_API_URL_STUDENTS, {
       method: 'GET',
@@ -17,7 +19,7 @@ onMounted(async () => {
         'Authorization': 'Bearer ' + userToken()
       }
     });
-    const data = await response.json();
+    const data = await response.json()
     if (response.ok) {
       content.value = data
     } else {
@@ -25,6 +27,8 @@ onMounted(async () => {
     }
   } catch (error) {
 
+  } finally {
+    isLoading.value = false
   }
 })
 </script>
@@ -32,9 +36,11 @@ onMounted(async () => {
 <template>
   <Header />
   <main class="bg-white flex-1 flex flex-col min-h-screen">
-    <ListContainer :headerItems="['id', 'Nome', 'E-mail']">
+    <ListContainer :headerItems="['id', 'Nome', 'E-mail']" :isLoading="isLoading.value">
 
-      <ListItem v-for="c in content" :id="c.id" :items="[c.id, c.name, c.email]" />
+      <ListItem v-for="c in content" :id="c.id" :items="[c.id, c.name, c.email]" button="Visualizar" />
+
+      <p v-if="!isLoading.value && content.length <= 0" class="p-6">Nenhum registro encontrado</p>
 
     </ListContainer>
     <Footer />

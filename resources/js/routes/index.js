@@ -30,27 +30,9 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/admin/students/show/:id',
-    name: 'adminStudentsShow',
-    component: () => import('../pages/admin/students/Show.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
     path: '/admin/courses',
     name: 'adminCoursesList',
     component: () => import('../pages/admin/courses/List.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/admin/courses/show/:id',
-    name: 'adminCoursesShow',
-    component: () => import('../pages/admin/courses/Show.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/admin/courses/edit/:id',
-    name: 'adminCoursesEdit',
-    component: () => import('../pages/admin/courses/Edit.vue'),
     meta: { requiresAuth: true },
   }
 ]

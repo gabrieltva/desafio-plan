@@ -1,4 +1,6 @@
 <script setup>
+import ListSkeleton from './ListSkeleton.vue';
+
 
 defineProps({
   headerItems: {
@@ -10,7 +12,8 @@ defineProps({
     type: Boolean,
     default: false
   },
-  nameButton: String
+  nameButton: String,
+  isLoading: Boolean,
 })
 
 </script>
@@ -51,6 +54,8 @@ defineProps({
 
             </tbody>
           </table>
+
+          <ListSkeleton v-if="isLoading" />
         </div>
 
       </div>
