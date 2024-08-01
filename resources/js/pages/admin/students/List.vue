@@ -31,23 +31,12 @@ onMounted(async () => {
 
 <template>
   <Header />
-  <main class="bg-white flex-1">
+  <main class="bg-white flex-1 flex flex-col min-h-screen">
+    <ListContainer :headerItems="['id', 'Nome', 'E-mail']">
 
-    <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 min-h-dvh">
-      <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-        <!-- Start coding here -->
-        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-          
-          <ListContainer :headerItems="['id', 'Nome', 'E-mail']">
+      <ListItem v-for="c in content" :id="c.id" :items="[c.id, c.name, c.email]" />
 
-            <ListItem v-for="c in content" :id="c.id" :items="[c.id, c.name, c.email]" />
-
-          </ListContainer>
-
-        </div>
-      </div>
-    </section>
-
+    </ListContainer>
+    <Footer />
   </main>
-  <Footer />
 </template>
