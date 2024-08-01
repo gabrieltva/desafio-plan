@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import HeaderLogin from '@/components/HeaderLogin.vue'
 import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
@@ -12,10 +12,6 @@ const role = ref('admin')
 const loading = ref(false)
 const errorMessage = ref('')
 const router = useRouter();
-
-onMounted(() => {
-
-});
 
 const onSubmit = async () => {
   loading.value = true;
@@ -35,9 +31,10 @@ const onSubmit = async () => {
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
-      const url = role.value === 'admin' ? '/admin/dashboard' : 'dashboard';
-      router.push(url);
+      const routeName = data.user.role === 'admin' ? 'adminDashboard' : 'dashboard';
+      router.push({ name: routeName });
     } else {
       showToast(data.message);
     }
@@ -58,14 +55,14 @@ const showToast = (message) => {
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <header-login message="Faça o login com sua conta" />
-    
+
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <error-alert v-if="errorMessage !== ''" v-model="errorMessage" />
 
       <form class="space-y-6" @submit.prevent="onSubmit">
         <Input type="email" name="email" label="E-mail" required="true" v-model="email" />
         <Input type="password" name="password" label="Senha" required="true" v-model="password" />
-        
+
         <div class="space-y-2">
           <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Cargo</label>
           <select name="role" v-model="role"
