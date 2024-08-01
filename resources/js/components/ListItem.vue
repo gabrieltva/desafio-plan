@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 
 defineProps({
   id: Number,
@@ -11,23 +10,24 @@ defineProps({
   button: {
     type: String,
     required: true,
-  }
+  },
+  click: Function
 })
 
-const showDropdown = ref(false)
+const emit = defineEmits(['click'])
 
-const toggleDropdown = () => {
-  showDropdown.value = !showDropdown.value
+const handleClick = () => {
+  emit('click')
 }
 </script>
 
 <template>
-  <tr :key="id" class="border-b dark:border-gray-700">
+  <tr :key="id" class="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
     
     <td v-for="item in items" class="px-4 py-3">{{ item }}</td>
 
     <td class="px-4 py-3 flex items-center justify-end">
-      <button @click="toggleDropdown"
+      <button @click="handleClick"
         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-green-500 hover:text-green-800 rounded-lg focus:outline-none dark:text-green-400 dark:hover:text-green-100"
         type="button">
         {{ button }}

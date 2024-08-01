@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import HeaderLogin from '@/components/HeaderLogin.vue'
 import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
-import ErrorAlert from '../components/ErrorAlert.vue';
+import Alert from '@/components/Alert.vue';
 import { useRouter } from 'vue-router';
 
 const email = ref('')
@@ -57,7 +57,7 @@ const showToast = (message) => {
     <header-login message="Faça o login com sua conta" />
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <error-alert v-if="errorMessage !== ''" v-model="errorMessage" />
+      <alert v-if="errorMessage !== ''" v-model="errorMessage" />
 
       <form class="space-y-6" @submit.prevent="onSubmit">
         <Input type="email" name="email" label="E-mail" required="true" v-model="email" />
