@@ -5,7 +5,7 @@ import { userToken } from "@/utils/user";
 import ListSkeleton from '@/components/ListSkeleton.vue';
 
 const props = defineProps({
-  id: String,
+  id: Number,
   title: String,
   description: String,
   students: Array
@@ -22,7 +22,7 @@ const alertType = ref('error')
 const formData = reactive({
   titleInput: ref(props.title),
   descriptionInput: ref(props.description),
-  studentsInput: ref(props.students)
+  studentsInput: ref(props.students.map(item => item.id))
 })
 
 onMounted(async () => {
@@ -53,7 +53,7 @@ const onSubmit = async (event) => {
   alertMessage.value = '';
 
   const method = props.id ? 'PUT' : 'POST'
-  const url = props.id ? import.meta.env.VITE_API_URL_COURSE_UPDATE : import.meta.env.VITE_API_URL_COURSE_REGISTER
+  const url = props.id ? import.meta.env.VITE_API_URL_COURSE_UPDATE.replace(':id', props.id) : import.meta.env.VITE_API_URL_COURSE_REGISTER
   const dataSend = {
     title: formData.titleInput,
     description: formData.descriptionInput,
@@ -72,8 +72,14 @@ const onSubmit = async (event) => {
     });
     const data = await response.json();
     if (response.ok) {
-      showToast('Curso cadastrado com sucesso', 'success')
-      resetForm()
+      
+      if (!props.id) {
+        resetForm()
+        showToast('Curso cadastrado com sucesso', 'success')
+      }
+      else {
+        showToast('Curso atualizado com sucesso', 'success')
+      }
     } else {
       showToast(data.message);
     }
@@ -86,7 +92,28 @@ const onSubmit = async (event) => {
 }
 
 const onRemove = async (event) => {
+  isRemoving.value = true
+  const url = import.meta.env.VITE_API_URL_COURSE_DELETE.replace(':id', props.id);
 
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken()
+      }
+    });
+    if (response.ok) {
+      onClose()
+    } else {
+      const data = await response.json()
+      showToast(data.message);
+    }
+  } catch (error) {
+    showToast(error);
+  } finally {
+    isRemoving.value = false
+  }
 }
 
 const showToast = (message, type = 'error') => {
