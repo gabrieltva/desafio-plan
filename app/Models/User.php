@@ -67,6 +67,12 @@ class User extends Authenticatable
             $this->hasMany(Course::class, 'admin_id') : 
             $this->belongsToMany(Course::class, 'courses_student_reference', 'student_id', 'course_id');
     }
+    public function courses_student_reference()
+    {
+        return $this->isAdmin() ? 
+            [] : 
+            $this->hasMany(CoursesStudentReference::class, 'student_id');
+    }
     
     public function students()
     {

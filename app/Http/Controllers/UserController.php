@@ -15,6 +15,17 @@ class UserController extends Controller
         return response()->json($students, 200);
     }
 
+    public function listStudentAndCourses(String $id)
+    {
+        $user = User::where('id', $id)->with('courses_student_reference')->with('courses')->firstOrFail();
+
+        if ($user->admin_id != auth()->id()) {
+            return response()->json(['message' => 'Student not found.'], 404);
+        }
+
+        return response()->json($user, 200);
+    }
+
     public function listAdmin()
     {
         $admins = User::where('role', UserRoleEnum::Admin)

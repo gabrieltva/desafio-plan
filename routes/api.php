@@ -20,6 +20,7 @@ Route::middleware('json')->group(function() {
     Route::middleware(['auth:sanctum', 'role:' . UserRoleEnum::Admin->value])->group(function () {
         Route::resource('course', CourseController::class);
         Route::get('admin/students', [UserController::class, 'listStudentsByAdmin']);
+        Route::get('admin/students/{id}', [UserController::class, 'listStudentAndCourses']);
     });
     
     //student routes

@@ -1,6 +1,6 @@
 <script setup>
 import ListSkeleton from './ListSkeleton.vue';
-
+import ListTable from './ListTable.vue';
 
 defineProps({
   headerItems: {
@@ -39,25 +39,11 @@ const onClick = () => {
           </button>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th v-for="item in headerItems" scope="col" class="px-4 py-3">{{ item }}</th>
-                <th scope="col" class="px-4 py-3">
-                  <span class="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+        <ListTable :headerItems="headerItems">
+          <slot />
+        </ListTable>
 
-              <slot />
-
-            </tbody>
-          </table>
-
-          <ListSkeleton v-if="isLoading" />
-        </div>
+        <ListSkeleton v-if="isLoading" />
 
       </div>
     </div>

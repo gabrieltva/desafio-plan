@@ -135,7 +135,7 @@ const resetForm = () => {
 </script>
 
 <template>
-  <div id="updateProductModal" tabindex="-1" aria-hidden="true"
+  <div tabindex="-1" aria-hidden="true"
     class="fixed overflow-y-auto overflow-x-hidden top-0 right-0 left-0 z-50 items-center w-full md:inset-0 h-modal md:h-full flex align-cente justify-center">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto z-10">
       <!-- Modal content -->

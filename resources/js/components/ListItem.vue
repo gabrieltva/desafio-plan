@@ -24,7 +24,7 @@ const handleClick = () => {
 <template>
   <tr :key="id" class="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
     
-    <td v-for="item in items" class="px-4 py-3">{{ item }}</td>
+    <td v-for="item in items" class="px-4 py-3" v-html="item"></td>
 
     <td class="px-4 py-3 flex items-center justify-end">
       <button @click="handleClick"
