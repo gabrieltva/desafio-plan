@@ -24,7 +24,7 @@ const onInput = (event) => {
 
 <template>
   <div>
-    <label :for="props.name" class="block text-sm font-medium leading-6 text-gray-900">{{ props.label }}</label>
+    <label :for="props.name" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">{{ props.label }}</label>
     <div class="mt-2">
       <input 
         :id="props.name"

@@ -8,7 +8,7 @@ import Input from '@/components/Input.vue'
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <header-login message="Cadastre-se" />
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm p-4 rounded-md shadow-lg bg-white dark:bg-gray-800">
       <form class="space-y-6" action="#" method="POST">
         <Input type="text" name="name" label="Nome" required="true" />
         <Input type="email" name="email" label="E-mail" required="true" />

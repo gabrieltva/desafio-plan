@@ -56,7 +56,7 @@ const showToast = (message) => {
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <header-login message="Faça o login com sua conta" />
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm p-4 rounded-md shadow-lg bg-white dark:bg-gray-800">
       <alert v-if="errorMessage !== ''" v-model="errorMessage" />
 
       <form class="space-y-6" @submit.prevent="onSubmit">
@@ -64,7 +64,7 @@ const showToast = (message) => {
         <Input type="password" name="password" label="Senha" required="true" v-model="password" />
 
         <div class="space-y-2">
-          <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Cargo</label>
+          <label for="role" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">Cargo</label>
           <select name="role" v-model="role"
             class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <option value="admin">Gestor</option>
