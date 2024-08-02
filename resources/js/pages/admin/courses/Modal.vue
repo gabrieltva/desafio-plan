@@ -2,6 +2,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import Alert from '@/components/Alert.vue';
 import { userToken } from "@/utils/user";
+import ListSkeleton from '@/components/ListSkeleton.vue';
 
 const props = defineProps({
   id: String,
@@ -12,6 +13,8 @@ const props = defineProps({
 
 const isRegistering = ref(false)
 const isRemoving = ref(false)
+const isLoading = ref(false)
+const studentsContent = ref([])
 
 const alertMessage = ref('')
 const alertType = ref('error')
@@ -20,6 +23,29 @@ const formData = reactive({
   titleInput: ref(props.title),
   descriptionInput: ref(props.description),
   studentsInput: ref(props.students)
+})
+
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    const response = await fetch(import.meta.env.VITE_API_URL_STUDENTS, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken()
+      }
+    });
+    const data = await response.json()
+    if (response.ok) {
+      studentsContent.value = data
+    } else {
+
+    }
+  } catch (error) {
+
+  } finally {
+    isLoading.value = false
+  }
 })
 
 const onSubmit = async (event) => {
@@ -31,7 +57,8 @@ const onSubmit = async (event) => {
   const dataSend = {
     title: formData.titleInput,
     description: formData.descriptionInput,
-    id:  props.id
+    students: formData.studentsInput,
+    id: props.id
   }
 
   try {
@@ -92,8 +119,7 @@ const resetForm = () => {
             <span v-if="id">Atualizar curso</span>
             <span v-else>Cadastrar curso</span>
           </h3>
-          <button type="button"
-            @click="onClose"
+          <button type="button" @click="onClose"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-toggle="updateProductModal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -124,6 +150,22 @@ const resetForm = () => {
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Escreva uma descrição..." v-model="formData.descriptionInput"></textarea>
             </div>
+            <div class="sm:col-span-2">
+              <fieldset>
+                <label for="students" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vincular
+                  estudantes</label>
+
+                <ListSkeleton v-if="isLoading" />
+                
+                <div v-else v-for="s in studentsContent" :key="s.id" class="flex items-center mb-4">
+                  <input :id="`student-${s.id}`" type="checkbox" :value="s.id" v-model="formData.studentsInput"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label :for="`student-${s.id}`" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ s.name }}
+                  </label>
+                </div>
+              </fieldset>
+            </div>
           </div>
           <div class="flex items-center space-x-4">
             <button type="submit" :disabled="isRegistering"
@@ -149,6 +191,6 @@ const resetForm = () => {
       </div>
 
     </div>
-    <div class="h-full w-full bg-black/50 cursor-pointer z-9 absolute start-0 top-0" @click="onClose" ></div>
+    <div class="h-full w-full bg-black/50 cursor-pointer z-9 absolute start-0 top-0" @click="onClose"></div>
   </div>
 </template>
