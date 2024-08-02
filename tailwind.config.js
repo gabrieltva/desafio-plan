@@ -10,8 +10,8 @@ export default {
   },
   plugins: [],
   safelist: [
-    'bg-red-100', 'border-red-400', 'text-red-700', 'text-red-500',
-    'bg-green-100', 'border-green-400', 'text-green-700', 'text-green-500',
+    'bg-red-400', 'bg-red-100', 'border-red-400', 'text-red-700', 'text-red-500',
+    'bg-green-400', 'bg-green-100', 'border-green-400', 'text-green-700', 'text-green-500',
     'bg-yellow-400', 'font-xs'
   ],
 }

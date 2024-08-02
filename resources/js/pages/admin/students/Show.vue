@@ -4,7 +4,7 @@ import ListSkeleton from '@/components/ListSkeleton.vue';
 import { userToken } from "@/utils/user";
 import ListItem from '@/components/ListItem.vue';
 import ListTable from '@/components/ListTable.vue';
-import { getStatusColor, getStatusName } from '@/utils/course';
+import { getStatusContent } from '@/utils/course';
 
 const props = defineProps({
   id: {
@@ -51,7 +51,7 @@ onMounted(async () => {
 
 const getStatus = (index) => {
   const status = dataStudent.courses_student_reference[index].status
-  return `<div class="bg-${getStatusColor(status)}-400 px-2 py-1 rounded-full text-white shadow text-center font-xs">${getStatusName(status)}</div>`
+  return getStatusContent(status)
 }
 
 </script>
@@ -65,7 +65,7 @@ const getStatus = (index) => {
         <!-- Modal header -->
         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-            <span>Visualizar estudante: {{ dataStudent.name }}</span>
+            <span>Visualizar colaborador: {{ dataStudent.name }}</span>
           </h3>
           <button type="button" @click="onClose"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"

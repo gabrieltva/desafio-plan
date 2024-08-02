@@ -12,9 +12,11 @@ class CoursesStudentController extends Controller
     public function index()
     {
         $student_id = auth()->id();
-        $user = User::with('courses')->findOrFail($student_id);
-        $courses = $user->courses()->get();
-        return response()->json($courses, 200);
+        $courses_student_ref = CoursesStudentReference::where([
+            'student_id' => $student_id
+        ])->with('course')->get();
+
+        return response()->json($courses_student_ref, 200);
     }
 
     public function show(Course $course)

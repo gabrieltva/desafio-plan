@@ -31,7 +31,7 @@ export const userDashboardRouterName = () => {
     return 'adminDashboard';
   }
 
-  return 'dashboard';
+  return 'studentDashboard';
 }
 
 export const removeUserData = () => {

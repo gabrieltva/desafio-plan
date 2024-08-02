@@ -34,7 +34,19 @@ const routes = [
     name: 'adminCoursesList',
     component: () => import('../pages/admin/courses/List.vue'),
     meta: { requiresAuth: true },
-  }
+  },
+  {
+    path: '/student/dashboard',
+    name: 'studentDashboard',
+    component: () => import('../pages/student/Dashboard.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/student/courses',
+    name: 'studentCoursesList',
+    component: () => import('../pages/student/courses/List.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({

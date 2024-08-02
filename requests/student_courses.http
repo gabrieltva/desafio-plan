@@ -1,6 +1,6 @@
 ### Listar Cursos
 GET http://localhost:8000/api/student/course
-Authorization: Bearer 6|Fqg7u3qkZhMy83qRN3R7NW39tQvHcnFe7dvyhg9Jf0f05e08
+Authorization: Bearer 12|JHXJqGvbCpFZeTfSfgl8p71FKU5n659FLl9SYyfF0168a767
 Content-Type: application/json
 
 ### Mostrar Curso Específico

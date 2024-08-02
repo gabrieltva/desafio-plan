@@ -5,6 +5,7 @@ import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
 import Alert from '@/components/Alert.vue';
 import { useRouter } from 'vue-router';
+import { userDashboardRouterName } from '@/utils/user';
 
 const email = ref('')
 const password = ref('')
@@ -33,8 +34,7 @@ const onSubmit = async () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      const routeName = data.user.role === 'admin' ? 'adminDashboard' : 'dashboard';
-      router.push({ name: routeName });
+      router.push({ name: userDashboardRouterName() });
     } else {
       showToast(data.message);
     }

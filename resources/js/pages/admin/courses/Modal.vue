@@ -180,7 +180,7 @@ const resetForm = () => {
             <div class="sm:col-span-2">
               <fieldset>
                 <label for="students" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vincular
-                  estudantes</label>
+                  colaboradores</label>
 
                 <ListSkeleton v-if="isLoading" />
                 

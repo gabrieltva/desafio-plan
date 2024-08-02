@@ -3,6 +3,7 @@ import { userDashboardRouterName } from '@/utils/user';
 import HeaderLink from './HeaderLink.vue';
 import { userToken, removeUserData } from "@/utils/user";
 import { useRouter } from 'vue-router';
+import { userRole } from '../utils/user';
 
 const router = useRouter();
 
@@ -53,8 +54,9 @@ const logout = async () => {
         <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
             <header-link :to="userDashboardRouterName()" :actived="true">Home</header-link>
-            <header-link to="adminStudentsList">Estudantes</header-link>
-            <header-link to="adminCoursesList">Cursos</header-link>
+            <header-link v-if="userRole() === 'admin'" to="adminStudentsList">Colaboradores</header-link>
+            <header-link v-if="userRole() === 'admin'" to="adminCoursesList">Cursos</header-link>
+            <header-link v-if="userRole() === 'student'" to="studentCoursesList">Cursos</header-link>
           </ul>
         </div>
       </div>
