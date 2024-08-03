@@ -51,7 +51,7 @@ const onSubmit = async () => {
       role: dataForm.role,
     }
 
-    if (dataForm.role === 'admin') {
+    if (dataForm.role !== 'admin') {
       dataPost['admin_id'] = dataForm.admin_id
     }
 
