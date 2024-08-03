@@ -62,13 +62,14 @@ docker-compose run --rm app chown -R www-data:www-data /var/www/bootstrap/cache
 
 ### 6. Migrar e Popular o Banco de Dados
 
-Após executar os testes, migre e popule o banco de dados conforme necessário:
+Após executar os testes, migre e popule o banco de dados conforme necessário, e gere a key do .env com os comandos a seguir:
 
 ```bash
 docker-compose run --rm app php artisan migrate
+docker-compose run --rm app php artisan key:generate
 ```
 
-Estes comandos executam as migrações pendentes e alimentam o banco de dados com dados iniciais.
+Estes comandos executam as migrações pendentes do banco de dados e adicionará uma key ao .env.
 
 ### 7. Acessar a Aplicação
 
