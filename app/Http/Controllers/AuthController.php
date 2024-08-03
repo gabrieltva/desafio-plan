@@ -28,7 +28,9 @@ class AuthController extends Controller
             'admin_id' => $request->admin_id
         ]);
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()->json(['token' => $token, 'user' => $user], 200);
     }
 
     public function login(Request $request)

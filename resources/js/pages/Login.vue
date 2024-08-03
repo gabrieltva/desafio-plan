@@ -6,16 +6,17 @@ import Input from '@/components/Input.vue'
 import Alert from '@/components/Alert.vue';
 import { useRouter } from 'vue-router';
 import { userDashboardRouterName } from '@/utils/user';
+import { setUser } from '../utils/user';
 
 const email = ref('')
 const password = ref('')
 const role = ref('admin')
-const loading = ref(false)
+const isLoading = ref(false)
 const errorMessage = ref('')
 const router = useRouter();
 
 const onSubmit = async () => {
-  loading.value = true;
+  isLoading.value = true;
   errorMessage.value = '';
   try {
     const response = await fetch(import.meta.env.VITE_API_URL_LOGIN, {
@@ -31,8 +32,7 @@ const onSubmit = async () => {
     });
     const data = await response.json();
     if (response.ok) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.token, data.user)
 
       router.push({ name: userDashboardRouterName() });
     } else {
@@ -42,7 +42,7 @@ const onSubmit = async () => {
     showToast(error);
     console.error('Erro na requisição:', error);
   } finally {
-    loading.value = false;
+    isLoading.value = false;
   }
 };
 
@@ -73,7 +73,7 @@ const showToast = (message) => {
         </div>
 
 
-        <Button type="submit" :loading="loading">
+        <Button type="submit" :loading="isLoading">
           Login
         </Button>
 

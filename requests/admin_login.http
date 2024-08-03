@@ -20,6 +20,10 @@ Content-Type: application/json
   "role": "admin"
 }
 
+### Admin list
+GET http://localhost:8000/api/admins
+Content-Type: application/json
+
 ### Get Authenticated User Information
 GET http://localhost:8000/api/user
 Authorization: Bearer 52|qDkNkmGqwSwPeODrZu8f9tew8jReu96d25bRIX6Na9ccf8d4

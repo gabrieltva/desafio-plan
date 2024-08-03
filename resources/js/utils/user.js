@@ -1,3 +1,8 @@
+export const setUser = (token, user) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(user));
+}
+
 const user = () => {
   try {
     const userJson = localStorage.getItem('user');

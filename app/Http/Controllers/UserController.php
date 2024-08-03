@@ -15,6 +15,11 @@ class UserController extends Controller
         return response()->json($students, 200);
     }
 
+    public function listAdmins()
+    {
+        return response()->json(User::where('admin_id', null)->select(['id', 'name'])->get(), 200);
+    }
+
     public function listStudentAndCourses(String $id)
     {
         $user = User::where('id', $id)->with('courses_student_reference')->with('courses')->firstOrFail();
