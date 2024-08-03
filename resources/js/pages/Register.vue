@@ -39,22 +39,22 @@ onMounted(async () => {
   }
 })
 
-const dataPost = {
-  name: dataForm.name,
-  email: dataForm.email,
-  password: dataForm.password,
-  password_confirmation: dataForm.password_confirmation,
-  role: dataForm.role,
-}
-
-if (dataForm.role === 'admin'){
-  dataPost['admin_id'] = dataForm.admin_id
-}
-
 const onSubmit = async () => {
   isLoading.value = true;
   errorMessage.value = '';
   try {
+    const dataPost = {
+      name: dataForm.name,
+      email: dataForm.email,
+      password: dataForm.password,
+      password_confirmation: dataForm.password_confirmation,
+      role: dataForm.role,
+    }
+
+    if (dataForm.role === 'admin') {
+      dataPost['admin_id'] = dataForm.admin_id
+    }
+
     const response = await fetch(import.meta.env.VITE_API_URL_REGISTER, {
       method: 'POST',
       headers: {
