@@ -3,6 +3,7 @@ import { onMounted, reactive, ref } from 'vue';
 import Alert from '@/components/Alert.vue';
 import { userToken } from "@/utils/user";
 import ListSkeleton from '@/components/ListSkeleton.vue';
+import { adminGetStudentsList } from '@/services/api';
 
 const props = defineProps({
   id: Number,
@@ -28,21 +29,8 @@ const formData = reactive({
 onMounted(async () => {
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_STUDENTS, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    const data = await response.json()
-    if (response.ok) {
-      studentsContent.value = data
-    } else {
-
-    }
-  } catch (error) {
-
+    const data = adminGetStudentsList()
+    studentsContent.value = data
   } finally {
     isLoading.value = false
   }

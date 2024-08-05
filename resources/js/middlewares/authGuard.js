@@ -1,4 +1,5 @@
 import { userToken } from "@/utils/user";
+import { checkGuard } from "@/services/api";
 
 const authGuard = async (to, from, next) => {
   try {
@@ -8,18 +9,8 @@ const authGuard = async (to, from, next) => {
       return;
     }
     
-    const response = await fetch(import.meta.env.VITE_API_URL_GUARD, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    });
-
-    if (response.ok) {
-      next();
-      return;
-    }
+    checkGuard()
+    next()
   } catch (error) {
     redirectToLogin();
   }

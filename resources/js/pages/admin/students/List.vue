@@ -2,10 +2,10 @@
 import { onMounted, ref } from 'vue';
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
-import { userToken } from "@/utils/user";
 import ListContainer from '@/components/ListContainer.vue';
 import ListItem from '@/components/ListItem.vue';
 import Show from '@/pages/admin/students/Show.vue';
+import { adminGetStudentsList } from '@/services/api';
 
 const content = ref([])
 const isLoading = ref(false)
@@ -15,21 +15,8 @@ const idUserModal = ref('')
 onMounted(async () => {
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_STUDENTS, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    const data = await response.json()
-    if (response.ok) {
-      content.value = data
-    } else {
-
-    }
-  } catch (error) {
-
+    const data = await adminGetStudentsList()
+    content.value = data
   } finally {
     isLoading.value = false
   }

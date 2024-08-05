@@ -2,11 +2,10 @@
 import { onMounted, ref } from 'vue';
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
-import { userToken } from "@/utils/user";
 import ListContainer from '@/components/ListContainer.vue';
 import ListItem from '@/components/ListItem.vue';
-import { getStatusContent } from '@/utils/course';
-import { getNextStatus } from '../../../utils/course';
+import { getStatusContent, getNextStatus } from '@/utils/course';
+import { studentGetCourseList, studentChangeStatus } from '@/services/api';
 
 const content = ref([])
 const isLoading = ref(false)
@@ -18,17 +17,8 @@ onMounted(() => {
 const getData = async () => {
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_STUDENT_COURSE_PAGE, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    const data = await response.json()
-    if (response.ok) {
-      content.value = data
-    }
+    const data = await studentGetCourseList()
+    content.value = data
   } finally {
     isLoading.value = false
   }
@@ -43,19 +33,8 @@ const onClickButton = async (id, status) => {
 
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_STUDENT_COURSE_STATUS.replace(':id', id), {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      },
-      body: JSON.stringify({
-        status: nextStatus
-      })
-    });
-    if (response.ok) {
-      getData()
-    }
+    studentChangeStatus(id, nextStatus)
+    getData()
   } finally {
     isLoading.value = false
   }

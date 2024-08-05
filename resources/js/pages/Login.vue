@@ -5,8 +5,8 @@ import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
 import Alert from '@/components/Alert.vue';
 import { useRouter } from 'vue-router';
-import { userDashboardRouterName } from '@/utils/user';
-import { setUser } from '../utils/user';
+import { userDashboardRouterName, setUser } from '@/utils/user';
+import { login } from '@/services/api';
 
 const email = ref('')
 const password = ref('')
@@ -19,28 +19,11 @@ const onSubmit = async () => {
   isLoading.value = true;
   errorMessage.value = '';
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_LOGIN, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-        role: role.value
-      })
-    });
-    const data = await response.json();
-    if (response.ok) {
-      setUser(data.token, data.user)
-
-      router.push({ name: userDashboardRouterName() });
-    } else {
-      showToast(data.message);
-    }
+    const data = await login(email.value, password.value, role.value)
+    setUser(data.token, data.user)
+    router.push({ name: userDashboardRouterName() });
   } catch (error) {
     showToast(error);
-    console.error('Erro na requisição:', error);
   } finally {
     isLoading.value = false;
   }

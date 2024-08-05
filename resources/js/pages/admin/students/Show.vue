@@ -5,6 +5,7 @@ import { userToken } from "@/utils/user";
 import ListItem from '@/components/ListItem.vue';
 import ListTable from '@/components/ListTable.vue';
 import { getStatusContent } from '@/utils/course';
+import { adminGetStudentCourse } from '../../../services/api';
 
 const props = defineProps({
   id: {
@@ -30,20 +31,11 @@ const onClose = () => {
 onMounted(async () => {
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_STUDENT_COURSE.replace(':id', props.id), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    const data = await response.json()
-    if (response.ok) {
-      dataStudent.name = data.name
-      dataStudent.email = data.email
-      dataStudent.courses = data.courses
-      dataStudent.courses_student_reference = data.courses_student_reference
-    }
+    const data = await adminGetStudentCourse(props.id)
+    dataStudent.name = data.name
+    dataStudent.email = data.email
+    dataStudent.courses = data.courses
+    dataStudent.courses_student_reference = data.courses_student_reference
   } finally {
     isLoading.value = false
   }
@@ -103,7 +95,8 @@ const getStatus = (index) => {
 
               <ListTable :headerItems="['id', 'Title', 'Status']">
 
-                <ListItem v-for="(c, index) in dataStudent.courses" :key="c.id" :id="c.id" :items="[c.id, c.title, getStatus(index)]" />
+                <ListItem v-for="(c, index) in dataStudent.courses" :key="c.id" :id="c.id"
+                  :items="[c.id, c.title, getStatus(index)]" />
 
                 <p v-if="!isLoading && dataStudent.courses.length <= 0" class="p-6">Nenhum curso vinculado</p>
 

@@ -1,23 +1,12 @@
-import { userToken, userDashboardRouterName } from "@/utils/user";
+import { userDashboardRouterName } from "@/utils/user";
+import { checkIsLogged } from "@/services/api";
 
 const authCheck = async (to, from, next) => {
   try {
-    const token = userToken();
-    const response = await fetch(import.meta.env.VITE_API_URL_GUARD, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    });
-
-    if (response.ok) {
-      next({name: userDashboardRouterName()});
-      return;
-    }
+    checkIsLogged()
+    next({name: userDashboardRouterName()});
   } catch (error) {
     next();
-    return;
   }
 }
 

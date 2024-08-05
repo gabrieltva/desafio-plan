@@ -6,6 +6,7 @@ import Alert from '@/components/Alert.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { setUser, userDashboardRouterName } from '@/utils/user'
+import { register } from '@/services/api';
 
 const isLoading = ref(false)
 const adminList = ref([])
@@ -43,36 +44,11 @@ const onSubmit = async () => {
   isLoading.value = true;
   errorMessage.value = '';
   try {
-    const dataPost = {
-      name: dataForm.name,
-      email: dataForm.email,
-      password: dataForm.password,
-      password_confirmation: dataForm.password_confirmation,
-      role: dataForm.role,
-    }
-
-    if (dataForm.role !== 'admin') {
-      dataPost['admin_id'] = dataForm.admin_id
-    }
-
-    const response = await fetch(import.meta.env.VITE_API_URL_REGISTER, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dataPost)
-    });
-    const data = await response.json();
-    if (response.ok) {
-      setUser(data.token, data.user)
-
-      router.push({ name: userDashboardRouterName() });
-    } else {
-      showToast(data.message);
-    }
+    const data = await register(dataForm.name, dataForm.email, dataForm.password, dataForm.password_confirmation, dataForm.role, dataForm.admin_id)
+    setUser(data.token, data.user)
+    router.push({ name: userDashboardRouterName() });
   } catch (error) {
     showToast(error);
-    console.error('Erro na requisição:', error);
   } finally {
     isLoading.value = false;
   }

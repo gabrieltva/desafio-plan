@@ -2,10 +2,10 @@
 import { onMounted, reactive, ref } from 'vue';
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
-import { userToken } from "@/utils/user";
 import ListContainer from '@/components/ListContainer.vue';
 import ListItem from '@/components/ListItem.vue';
 import Modal from '@/pages/admin/courses/Modal.vue';
+import { adminGetCourseList } from '@/services/api';
 
 const content = ref([])
 const isLoading = ref(false)
@@ -25,21 +25,8 @@ onMounted(() => {
 const getData = async (event) => {
   isLoading.value = true
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL_COURSES, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    const data = await response.json();
-    if (response.ok) {
-      content.value = data
-    } else {
-
-    }
-  } catch (error) {
-
+    const data = await adminGetCourseList()
+    content.value = data
   } finally {
     isLoading.value = false
   }
