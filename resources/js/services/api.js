@@ -99,8 +99,50 @@ export const studentChangeStatus = async (id, status) => {
   }
 }
 
-export const adminSaveStudentCourse = async (id, course) => {
+export const adminSaveStudentCourse = async (title, description, students, id = null) => {
+  const method = id ? 'PUT' : 'POST'
+  const url = id ? import.meta.env.VITE_API_URL_COURSE_UPDATE.replace(':id', id) : import.meta.env.VITE_API_URL_COURSE_REGISTER
 
+  const dataSend = {
+    title: title,
+    description: description,
+    students: students,
+    id: id
+  }
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken()
+    },
+    body: JSON.stringify(dataSend)
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    const message = data.message !== undefined ? data.message : 'Ocorreu um erro ao registrar dados'
+    throw new Error(message)
+  }
+
+  return data
+}
+
+export const adminRemoveStudentCourse = async (id) => {
+  const url = import.meta.env.VITE_API_URL_COURSE_DELETE.replace(':id', id);
+
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken()
+    }
+  });
+
+  if (!response.ok) {
+    const data = await response.json()
+    const message = data.message !== undefined ? data.message : 'Ocorreu um erro ao remover dados'
+    throw new Error(message)
+  }
 }
 
 const getData = async(url) => {

@@ -1,11 +1,10 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import ListSkeleton from '@/components/ListSkeleton.vue';
-import { userToken } from "@/utils/user";
 import ListItem from '@/components/ListItem.vue';
 import ListTable from '@/components/ListTable.vue';
 import { getStatusContent } from '@/utils/course';
-import { adminGetStudentCourse } from '../../../services/api';
+import { adminGetStudentCourse } from '@/services/api';
 
 const props = defineProps({
   id: {

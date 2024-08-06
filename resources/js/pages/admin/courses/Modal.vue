@@ -1,9 +1,8 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import Alert from '@/components/Alert.vue';
-import { userToken } from "@/utils/user";
 import ListSkeleton from '@/components/ListSkeleton.vue';
-import { adminGetStudentsList } from '@/services/api';
+import { adminGetStudentsList, adminRemoveStudentCourse, adminSaveStudentCourse } from '@/services/api';
 
 const props = defineProps({
   id: Number,
@@ -29,7 +28,8 @@ const formData = reactive({
 onMounted(async () => {
   isLoading.value = true
   try {
-    const data = adminGetStudentsList()
+    const data = await adminGetStudentsList()
+    console.log(data)
     studentsContent.value = data
   } finally {
     isLoading.value = false
@@ -40,40 +40,12 @@ const onSubmit = async (event) => {
   isRegistering.value = true;
   alertMessage.value = '';
 
-  const method = props.id ? 'PUT' : 'POST'
-  const url = props.id ? import.meta.env.VITE_API_URL_COURSE_UPDATE.replace(':id', props.id) : import.meta.env.VITE_API_URL_COURSE_REGISTER
-  const dataSend = {
-    title: formData.titleInput,
-    description: formData.descriptionInput,
-    students: formData.studentsInput,
-    id: props.id
-  }
-
   try {
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      },
-      body: JSON.stringify(dataSend)
-    });
-    const data = await response.json();
-    if (response.ok) {
-      
-      if (!props.id) {
-        resetForm()
-        showToast('Curso cadastrado com sucesso', 'success')
-      }
-      else {
-        showToast('Curso atualizado com sucesso', 'success')
-      }
-    } else {
-      showToast(data.message);
-    }
+    await adminSaveStudentCourse(formData.titleInput, formData.descriptionInput, formData.studentsInput, props.id)
+    resetForm()
+    showToast('Curso cadastrado com sucesso', 'success')
   } catch (error) {
     showToast(error);
-    console.error('Erro na requisição:', error);
   } finally {
     isRegistering.value = false;
   }
@@ -81,22 +53,10 @@ const onSubmit = async (event) => {
 
 const onRemove = async (event) => {
   isRemoving.value = true
-  const url = import.meta.env.VITE_API_URL_COURSE_DELETE.replace(':id', props.id);
 
   try {
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken()
-      }
-    });
-    if (response.ok) {
-      onClose()
-    } else {
-      const data = await response.json()
-      showToast(data.message);
-    }
+    await adminRemoveStudentCourse(props.id)
+    onClose()
   } catch (error) {
     showToast(error);
   } finally {
